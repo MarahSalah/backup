@@ -1,0 +1,35 @@
+[
+    {
+      "id": 1,
+      "name": "Birthday Gift 1",
+      "description": "A wonderful birthday gift",
+      "price": 29.99,
+      "image": "https://cityfurnish.com/blog/wp-content/uploads/2023/07/wrapped-gift-box-with-shiny-gold-decoration-generated-by-ai-min-1200x900.jpg"
+
+    },
+    {
+      "id": 2,
+      "name": "Birthday Gift 2",
+      "description": "Another amazing birthday gift",
+      "price": 39.99,
+      "image": "https://cityfurnish.com/blog/wp-content/uploads/2023/07/wrapped-gift-box-with-shiny-gold-decoration-generated-by-ai-min-1200x900.jpg"
+
+    },
+    {
+      "id": 3,
+      "name": "Christmas Gift 1",
+      "description": "A festive Christmas gift",
+      "price": 49.99,
+      "image": "https://cityfurnish.com/blog/wp-content/uploads/2023/07/wrapped-gift-box-with-shiny-gold-decoration-generated-by-ai-min-1200x900.jpg"
+
+    },
+    {
+      "id": 4,
+      "name": "Christmas Gift 2",
+      "description": "Spread holiday cheer with this gift",
+      "price": 59.99,
+      "image": "https://cityfurnish.com/blog/wp-content/uploads/2023/07/wrapped-gift-box-with-shiny-gold-decoration-generated-by-ai-min-1200x900.jpg"
+
+    }
+  ]
+  
