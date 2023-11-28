@@ -1,56 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Checkout from './Checkout'; 
-import { useParams } from 'react-router-dom';
 
-const API_BASE_URL = 'https://your-real-api-endpoint.com';
-
-const Cart = () => {
-  const { id } = useParams();
+export const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const incrementCounter = (id) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
-
-  const decrementCounter = (id) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
-
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/products/${id}`)
-      .then(response => {
-        const productWithQuantity = { ...response.data, quantity: 1 };
-        setCartItems([productWithQuantity]);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
-  }, [id]);
+    fetchCartData();
+  }, []);
 
-  const deleteItem = (id) => {
-    axios.delete(`${API_BASE_URL}/products/${id}`)
+  const fetchCartData = () => {
+    axios.get('http://localhost:8080/Cart')
       .then(response => {
-        console.log(response.data);
-        setCartItems([]);
+        setCartItems(response.data); 
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
+        setLoading(false);
       });
   };
+
+  const handleIncrement = (itemId) => {
+    axios.put(`http://localhost:8080/Cart/${itemId}`, { action: 'increment' })
+      .then(() => {
+        fetchCartData();
+      })
+      .catch(error => {
+        console.error('Error updating data:', error);
+      });
+  };
+
+  
+  const handleDecrement = (itemId) => {
+    axios.put(`http://localhost:8080/Cart/${itemId}`, { action: 'decrement' })
+      .then(() => {
+        fetchCartData();
+      })
+      .catch(error => {
+        console.error('Error updating data:', error);
+      });
+  };
+
+
+  const handleRemove = (itemId) => {
+    axios.delete(`http://localhost:8080/Cart/${itemId}`)
+      .then(() => {
+        fetchCartData();
+      })
+      .catch(error => {
+        console.error('Error removing item:', error);
+      });
+  };
+
   return (
     <div>
       <section className="h-screen bg-gray-100 py-12 sm:py-16 lg:py-20">
@@ -80,36 +82,20 @@ const Cart = () => {
                               {item.name}
                             </p>
                             <p className="mx-0 mt-1 mb-0 text-sm text-gray-400">
-                              Quantity: {item.quantity}
+                              Count: {item.count}
                             </p>
                           </div>
                           <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
+                            <button onClick={() => handleDecrement(item.id)} className="bg-gray-200 p-2 rounded-md">-</button>
+                            <p className="mx-2 text-base font-semibold text-gray-900">{item.count}</p>
+                            <button onClick={() => handleIncrement(item.id)} className="bg-gray-200 p-2 rounded-md">+</button>
                             <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
-                              ${item.price.toFixed(2)} per unit
+                              Total: ${item.price * item.count}
                             </p>
-                            <div className="sm:order-1">
-                              <div className="mx-auto flex h-8 items-stretch text-gray-600">
-                                <button onClick={() => { decrementCounter(item.id) }} className="flex items-center justify-center rounded-l-md bg-gray-200 px-4 transition hover:bg-black hover:text-white">
-                                  -
-                                </button>
-                                <div className="flex w-full items-center justify-center bg-gray-100 px-4 text-xs uppercase transition">
-                                  {item.quantity}
-                                </div>
-                                <button onClick={() => { incrementCounter(item.id) }} className="flex items-center justify-center rounded-r-md bg-gray-200 px-4 transition hover:bg-black hover:text-white">
-                                  +
-                                </button>
-                              </div>
-                            </div>
                           </div>
                         </div>
                         <div className="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
-                          <button
-                            onClick={() => { deleteItem(item.id) }}
-                            type="button"
-                            className="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900"
-                          >
-                            Remove
-                          </button>
+                          <button onClick={() => handleRemove(item.id)} className="bg-red-500 p-2 rounded-md text-white">Remove</button>
                         </div>
                       </div>
                     </div>
@@ -120,8 +106,6 @@ const Cart = () => {
           </div>
         </div>
       </section>
-
-      <Checkout cartItems={cartItems} />
     </div>
   );
 };
