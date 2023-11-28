@@ -11,19 +11,16 @@ const Checkout = ({ cartItems }) => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const handleConfirmPurchase = () => {
+    const orderDetails = cartItems.map(item => ({
+      productId: item.id,
+      count: item.quantity,
+      totalPerUnit: item.price * item.quantity
+    }));
 
-    const handleConfirmPurchase=()=> {
-      const orderDetails=cartItems.map(item => ( {
-
-        productId:item.id,
-        count:item.quantity,
-        totalperUnit:item.price*item.quantity
-      }));
-    }
-console.log('order Details:',orderDetails);
+    console.log('Order Details:', orderDetails);
 
  
-    // setCartItems([]);
   };
 
   return (
@@ -42,7 +39,7 @@ console.log('order Details:',orderDetails);
               <span>${item.price * item.quantity}</span>
             </div>
           ))}
-           <hr className="my-4" />
+          <hr className="my-4" />
           <div className="flex justify-between">
             <span className="font-semibold">Total:</span>
             <span>${calculateTotal()}</span>
@@ -55,4 +52,5 @@ console.log('order Details:',orderDetails);
     </div>
   );
 };
-export default CartContext
+
+export default Checkout;

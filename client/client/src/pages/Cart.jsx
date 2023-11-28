@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Checkout from './Checkout'; 
+import { useParams } from 'react-router-dom';
+
+const API_BASE_URL = 'https://your-real-api-endpoint.com';
 
 const Cart = () => {
+  const { id } = useParams();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,31 +29,28 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    axios.get('https://fakestoreapi.com/products')
+    axios.get(`${API_BASE_URL}/products/${id}`)
       .then(response => {
-        const productsWithQuantity = response.data.map(product => ({ ...product, quantity: 1 }));
-        setCartItems(productsWithQuantity);
+        const productWithQuantity = { ...response.data, quantity: 1 };
+        setCartItems([productWithQuantity]);
         setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   const deleteItem = (id) => {
-    axios.delete(`https://fakestoreapi.com/products/${id}`)
+    axios.delete(`${API_BASE_URL}/products/${id}`)
       .then(response => {
         console.log(response.data);
-        setCartItems(cartItems.filter((item) => item.id !== id));
+        setCartItems([]);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
   };
-
-  const maxItemsToShow = 3;
-
   return (
     <div>
       <section className="h-screen bg-gray-100 py-12 sm:py-16 lg:py-20">
@@ -62,7 +64,7 @@ const Cart = () => {
                 <p>Loading...</p>
               ) : (
                 <div className="px-4 py-6 sm:px-8 sm:py-10">
-                  {cartItems.slice(0, maxItemsToShow).map(item => (
+                  {cartItems.map(item => (
                     <div key={item.id} className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
                       <div className="shrink-0">
                         <img
@@ -83,7 +85,7 @@ const Cart = () => {
                           </div>
                           <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
                             <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
-                              ${item.price * item.quantity}
+                              ${item.price.toFixed(2)} per unit
                             </p>
                             <div className="sm:order-1">
                               <div className="mx-auto flex h-8 items-stretch text-gray-600">
@@ -118,6 +120,8 @@ const Cart = () => {
           </div>
         </div>
       </section>
+
+      <Checkout cartItems={cartItems} />
     </div>
   );
 };
