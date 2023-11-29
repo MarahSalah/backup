@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Checkout from './Checkout';
 
 export const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -31,7 +33,6 @@ export const Cart = () => {
       });
   };
 
-  
   const handleDecrement = (itemId) => {
     axios.put(`http://localhost:8080/Cart/${itemId}`, { action: 'decrement' })
       .then(() => {
@@ -41,7 +42,6 @@ export const Cart = () => {
         console.error('Error updating data:', error);
       });
   };
-
 
   const handleRemove = (itemId) => {
     axios.delete(`http://localhost:8080/Cart/${itemId}`)
@@ -106,6 +106,9 @@ export const Cart = () => {
           </div>
         </div>
       </section>
+
+     
+      <Checkout cartItems={cartItems} />
     </div>
   );
 };

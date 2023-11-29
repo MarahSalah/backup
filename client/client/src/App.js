@@ -26,7 +26,9 @@ import Chrestmascake from './Christmas/Chrestmascake';
 import Wintercake from './winter/Wintercake';
 import ProductDetails from './Birthday/Birthday_gift/ProductDetails';
 import BirthdayPackageDetails from './Birthday/birthday_package/BirthdayPackageDetails';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminDashboard from './Admin/AdminDashboard';
+import Checkout from './pages/Checkout';
+
 
 function App() {
   return (
@@ -43,6 +45,7 @@ function App() {
         <Route path='/christmas-gifts' element={<ChrestmasGift />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/admin' element={<AdminDashboard />} />
+        <Route path='/checkout' element={<Checkout />} />
 
         <Route path='/giftsPackge' element={<GiftPackge />} />
         <Route path='/birthday-Packge' element={<BirthdayPackge />} />
@@ -57,6 +60,7 @@ function App() {
         <Route path='/christmas-cake' element={<Chrestmascake />} />
         <Route path="/birthday-package/:id" element={<BirthdayPackageDetails />} /> 
         <Route path="/product/:id" element={<ProductDetails />} />
+        
       </Routes>
       <Footer />
     </BrowserRouter>

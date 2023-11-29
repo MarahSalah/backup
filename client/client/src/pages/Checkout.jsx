@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Checkout = ({ cartItems }) => {
   const [showCheckout, setShowCheckout] = useState(false);
+  const [recipientName, setRecipientName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [giftMessage, setGiftMessage] = useState('');
+  const [location, setLocation] = useState('');
+  const [deliveryDate, setDeliveryDate] = useState(null);
+  const [buyNowClicked, setBuyNowClicked] = useState(false);
+  const [purchaseClicked, setPurchaseClicked] = useState(false);
 
   const handleBuyNow = () => {
-    setShowCheckout(true);
+    setBuyNowClicked(true);
   };
 
   const calculateTotal = () => {
@@ -12,25 +21,27 @@ const Checkout = ({ cartItems }) => {
   };
 
   const handleConfirmPurchase = () => {
-    const orderDetails = cartItems.map(item => ({
-      productId: item.id,
-      count: item.quantity,
-      totalPerUnit: item.price * item.quantity
-    }));
+    setPurchaseClicked(true);
 
-    console.log('Order Details:', orderDetails);
-
- 
+    setShowCheckout(false);
+    setRecipientName('');
+    setPhoneNumber('');
+    setGiftMessage('');
+    setLocation('');
+    setDeliveryDate(null);
   };
 
   return (
     <div>
-      <div className="my-4">
-        <button onClick={handleBuyNow} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Buy Now
-        </button>
-      </div>
-      {showCheckout && (
+      {!buyNowClicked && (
+        <div className="my-4">
+          <button onClick={handleBuyNow} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Buy Now
+          </button>
+        </div>
+      )}
+
+      {buyNowClicked && !purchaseClicked && (
         <div className="bg-white shadow-md p-4">
           <h2 className="text-lg font-semibold mb-4">Checkout</h2>
           {cartItems.map((item) => (
@@ -44,9 +55,85 @@ const Checkout = ({ cartItems }) => {
             <span className="font-semibold">Total:</span>
             <span>${calculateTotal()}</span>
           </div>
+
+          
           <button onClick={handleConfirmPurchase} className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
             Confirm Purchase
           </button>
+        </div>
+      )}
+
+      {purchaseClicked && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-md">
+            <h2 className="text-lg font-semibold mb-4">Enter Recipient Details</h2>
+            <form>
+              <div className="mb-4">
+                <label htmlFor="recipientName" className="block text-sm font-medium text-gray-700">Recipient Name:</label>
+                <input
+                  type="text"
+                  id="recipientName"
+                  value={recipientName}
+                  onChange={(e) => setRecipientName(e.target.value)}
+                  className="mt-1 p-2 w-full border rounded-md"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone Number:</label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="mt-1 p-2 w-full border rounded-md"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="giftMessage" className="block text-sm font-medium text-gray-700">Gift Message:</label>
+                <textarea
+                  id="giftMessage"
+                  value={giftMessage}
+                  onChange={(e) => setGiftMessage(e.target.value)}
+                  className="mt-1 p-2 w-full border rounded-md"
+                />
+              </div>
+              
+              <div className="mb-4">
+            <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location:</label>
+            <select
+              id="location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="mt-1 p-2 w-full border rounded-md"
+            >
+              <option value="">Select Location</option>
+              <option value="amman">Amman</option>
+              <option value="zarqa">Zarqa</option>
+              <option value="mafraq">Mafraq</option>
+              <option value="irbid">Irbid</option>
+              <option value="salt">Salt</option>
+              <option value="balqaa">Balqaa</option>
+              <option value="jerash">Jerash</option>
+              <option value="ajloun">Ajloun</option>
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="deliveryDate" className="block text-sm font-medium text-gray-700">Delivery Date:</label>
+            <DatePicker
+              id="deliveryDate"
+              selected={deliveryDate}
+              onChange={(date) => setDeliveryDate(date)}
+              minDate={new Date()}
+              dateFormat="dd/MM/yyyy"
+              className="mt-1 p-2 w-full border rounded-md"
+            />
+          </div>
+          <button type="submit" onClick={handleConfirmPurchase} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Confirm Purchase
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </div>
