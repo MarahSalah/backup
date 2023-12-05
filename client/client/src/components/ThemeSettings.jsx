@@ -1,89 +1,51 @@
 import React from "react";
-import { MdOutlineCancel } from 'react-icons/md';
-import { BsCheck } from 'react-icons/bs';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+<>
 
-import { themeColors } from '../data/dummy';
-import { useStateContext } from '../contexts/ContextProvider';
+<div class="md:flex w-2/5 md:w-1/4 h-screen bg-white border-r hidden mr-100">
+<div class="mx-auto py-10">
+{/* <h1 class="text-2xl font-bold mb-10 cursor-pointer text-[#EC5252] duration-150">Asason</h1> */}
+<ul>
+<li class="flex space-x-2 mt-10 cursor-pointer hover:text-[#EC5252] duration-150">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+    stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+  </svg>		
 
-const ThemeSettings = () => {
-  const { setColor, setMode, currentMode, currentColor, setThemeSettings } = useStateContext();
+  <Link to="/birthdaygifts">Birthday</Link>
 
-  return (
-  <div className='bg-half-transparent w-screen fixed nav-item top-0 right-0'>
-    <div className="float-right h-screen dark:text-gray-200 bg-white dark:[#484B52] w-400">
-      <div className="flex justify-between items-center p-4 ml-4">
-        <p className="font-semibold text-lg">
-          Settings
-        </p>
-        <button
-        type="button"
-        onClick={() => setThemeSettings(false)}
-        style={{color: 'rgb(153, 171, 180)', borderRadius: '50%'  }}
-        className='text-2xl p-3 hover:drop-shadow-xl hover:bg-light-gray'
-        >
-          <MdOutlineCancel/>
-        </button>
-      </div>
+</li>
+<li class="flex space-x-2 mt-10 cursor-pointer hover:text-[#EC5252] duration-150">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+    stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>
+  <Link to="/christmasgifts">Christmas</Link>
+</li>
+<li class="flex space-x-2 mt-10 cursor-pointer hover:text-[#EC5252] duration-150">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+    stroke="currentColor">
+    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+    <path
+      d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+  </svg>
+  <Link to="/wintergifts">winter</Link>
+</li>
+<li class="flex space-x-2 mt-10 cursor-pointer hover:text-[#EC5252] duration-150">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+    stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+  </svg>
+  <Link to="/weddinggifts">Wedding</Link>
+</li>
 
-      <div className="flex-col border-t-1 border-color p-4 ml-4">
-          <p className="font-semibold text-xl ">Theme Option</p>
+  
+</ul>
+</div>
+</div>
+</>
 
-          <div className="mt-4">
-            <input
-              type="radio"
-              id="light"
-              name="theme"
-              value="Light"
-              className="cursor-pointer"
-              onChange={setMode}
-              checked={currentMode === 'Light'}
-            />
-            <label htmlFor="light" className="ml-2 text-md cursor-pointer">
-              Light
-            </label>
-          </div>
-          <div className="mt-2">
-            <input
-              type="radio"
-              id="dark"
-              name="theme"
-              value="Dark"
-              onChange={setMode}
-              className="cursor-pointer"
-              checked={currentMode === 'Dark'}
-            />
-            <label htmlFor="dark" className="ml-2 text-md cursor-pointer">
-              Dark
-            </label>
-          </div>
-        </div>
-
-        <div className="p-4 border-t-1 border-color ml-4">
-          <p className="font-semibold text-xl ">Theme Colors</p>
-          <div className="flex gap-3">
-            {themeColors.map((item, index) => (
-              <TooltipComponent key={index} content={item.name} position="TopCenter">
-                <div
-                  className="relative mt-2 cursor-pointer flex gap-5 items-center"
-                  key={item.name}
-                >
-                  <button
-                    type="button"
-                    className="h-10 w-10 rounded-full cursor-pointer"
-                    style={{ backgroundColor: item.color }}
-                    onClick={() => setColor(item.color)}
-                  >
-                    <BsCheck className={`ml-2 text-2xl text-white ${item.color === currentColor  ? 'block' : 'hidden'}`} />
-                  </button>
-                </div>
-              </TooltipComponent>
-            ))}
-          </div>
-        </div>
-    </div>
-  </div>
-  )
-};
-
-export default ThemeSettings;

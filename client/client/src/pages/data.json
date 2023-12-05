@@ -1,0 +1,19 @@
+{
+  "gift": {
+    "subCategories": ["Birthday", "Wedding", "Christmas"],
+    "products": {
+      "Birthday": [
+        {"id": 1, "name": "Birthday Product 1", "price": "$10", "image": "image1.jpg"},
+        {"id": 2, "name": "Birthday Product 2", "price": "$15", "image": "image2.jpg"}
+      ],
+      "Wedding": [
+        {"id": 3, "name": "Wedding Product 1", "price": "$20", "image": "image3.jpg"},
+        {"id": 4, "name": "Wedding Product 2", "price": "$25", "image": "image4.jpg"}
+      ],
+      "Christmas": [
+        {"id": 5, "name": "Christmas Product 1", "price": "$30", "image": "image5.jpg"},
+        {"id": 6, "name": "Christmas Product 2", "price": "$35", "image": "image6.jpg"}
+      ]
+    }
+  }
+}

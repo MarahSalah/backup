@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios';
 
 const Checkout = ({ cartItems }) => {
   const [showCheckout, setShowCheckout] = useState(false);
@@ -22,7 +23,6 @@ const Checkout = ({ cartItems }) => {
 
   const handleConfirmPurchase = () => {
     setPurchaseClicked(true);
-
     setShowCheckout(false);
     setRecipientName('');
     setPhoneNumber('');
@@ -41,27 +41,29 @@ const Checkout = ({ cartItems }) => {
         </div>
       )}
 
-      {buyNowClicked && !purchaseClicked && (
-        <div className="bg-white shadow-md p-4">
-          <h2 className="text-lg font-semibold mb-4">Checkout</h2>
-          {cartItems.map((item) => (
-            <div key={item.id} className="flex justify-between mb-2">
-              <span>{item.name} x {item.quantity}</span>
-              <span>${item.price * item.quantity}</span>
-            </div>
-          ))}
-          <hr className="my-4" />
-          <div className="flex justify-between">
-            <span className="font-semibold">Total:</span>
-            <span>${calculateTotal()}</span>
-          </div>
-
-          
-          <button onClick={handleConfirmPurchase} className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-            Confirm Purchase
-          </button>
+{buyNowClicked && !purchaseClicked && (
+  <div className="bg-white shadow-md p-4">
+    <h2 className="text-lg font-semibold mb-4">Checkout</h2>
+    {Array.isArray(cartItems) ? (
+      cartItems.map((item) => (
+        <div key={item.id} className="flex justify-between mb-2">
+          <span>{item.name} x {item.quantity}</span>
+          <span>${item.price * item.quantity}</span>
         </div>
-      )}
+      ))
+    ) : (
+      <p>Invalid cart items</p>
+    )}
+    <hr className="my-4" />
+    <div className="flex justify-between">
+      <span className="font-semibold">Total:</span>
+      <span>${calculateTotal()}</span>
+    </div>
+    <button onClick={handleConfirmPurchase} className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+      Confirm Purchase
+    </button>
+  </div>
+)}
 
       {purchaseClicked && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -129,8 +131,36 @@ const Checkout = ({ cartItems }) => {
               className="mt-1 p-2 w-full border rounded-md"
             />
           </div>
-          <button type="submit" onClick={handleConfirmPurchase} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Confirm Purchase
+          <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    const response = await axios.post("api", {
+                      recipientName,
+                      phoneNumber,
+                      giftMessage,
+                      location,
+                      deliveryDate,
+                      cartItems,
+                    });
+
+                    if (response.status === 200) {
+                      setPurchaseClicked(true);
+
+                      const responseData = response.data;
+                      const paymentEndpoint = responseData.paymentEndpoint;
+
+                      window.location.href = paymentEndpoint;
+                    } else {
+                      console.error("error");
+                    }
+                  } catch (error) {
+                    console.error("error", error);
+                  }
+                }}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Confirm
               </button>
             </form>
           </div>

@@ -30,15 +30,15 @@ const SignUp = () => {
       return;
     }
 
-    if (password !== confirmPassword) {
-      setPasswordError("Passwords do not match");
-      return;
-    } else if (password.length < 8 || !/\d/.test(password) || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[!@#$%^&*]/.test(password)) {
-      setPasswordError("Password must be at least 8 characters and include numbers, lowercase and uppercase letters, and special characters.");
-      return;
-    } else {
-      setPasswordError("");
-    }
+    // if (password !== confirmPassword) {
+    //   setPasswordError("Passwords do not match");
+    //   return;
+    // } else if (password.length < 8 || !/\d/.test(password) || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[!@#$%^&*]/.test(password)) {
+    //   setPasswordError("Password must be at least 8 characters and include numbers, lowercase and uppercase letters, and special characters.");
+    //   return;
+    // } else {
+    //   setPasswordError("");
+    // }
 
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       setEmailError("Invalid email format");

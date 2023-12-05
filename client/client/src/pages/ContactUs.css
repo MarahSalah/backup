@@ -1,0 +1,116 @@
+body {
+    background-color: white;
+  }
+  
+  .hero-section-contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230706/pngtree-e-commerce-website-featuring-gift-boxes-on-purple-background-with-3d-image_3807107.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    color: white;
+    font-size: 80%;
+  }
+  
+  .hero-section-contact h2 {
+    font-size: 80px;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    margin-left: 40%;
+    margin-top: 5%;
+  }
+  
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color:white;
+  }
+  
+  .form-container {
+    border-radius: 10px;
+    padding: 30px;
+    background-color:rgb(58, 99, 195);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    margin: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+  }
+  
+  .form label {
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  .form input[type="text"],
+  .form input[type="email"],
+  .form textarea {
+    background-color: rgba(92, 92, 66, 0.1);
+  }
+  
+  .text {
+    padding: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .hero-section-contact {
+      height: 300px; 
+    }
+  
+    .hero-section-contact h2 {
+      font-size: 40px; 
+      margin-left: 30%; 
+      margin-top: 2%; 
+    }
+  
+    .form-container {
+      width: 90%;
+    }
+  
+    .text {
+      font-size: 16px; 
+      margin-top: 20px; 
+    }
+  }
+  
+  
+  
+  
+  
+  @media (min-width: 769px) {
+    .hero-section-contact {
+      height: 500px; 
+    }
+  
+    .hero-section-contact h2 {
+      font-size: 80px; 
+      margin-left: 40%;
+      margin-top: 5%; 
+    }
+  
+    .form-container {
+      max-width: 800px; 
+      margin: 20px;
+      width: 800px;
+    }
+  
+    .text {
+      font-size: 20px;
+      margin-top: 20px; 
+    }
+  }

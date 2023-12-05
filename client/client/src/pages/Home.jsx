@@ -23,19 +23,13 @@ const Home = () => {
       </div>
       <div className="mb-16"></div>
       <HowDoesItWork />
-      
-      <div className="mb-32"></div>
-
-      <div style={{ backgroundColor: 'rgb(39, 40, 61)' }}>
-        <GiftSection/>
-      
-      </div>
-
+   
       <div className="w-2/3 mx-auto flex items-center mb-16">
           <div className="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
           <span className="px-4 font-extrabold text-2xl text-red-500 bg-white dark:text-white dark-bg-gray-900 mt-4 mb-2">Top Gifts</span>
           <div className="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
         </div>
+        
       <TopSellingGifts />
       <div className="mt-16 text-center">
         <Link to="/gifts" className="bg-indigo-900 text-white py-4 px-4 rounded-full inline-block">View All Category Gifts</Link>
@@ -81,8 +75,14 @@ const Home = () => {
       <br/> <br/> <br/> 
       <br/> <br/> <br/> 
      
- 
-   
+      <div className="mb-32"></div>
+
+<div style={{ backgroundColor: 'rgb(39, 40, 61)' }}>
+  <GiftSection/>
+
+</div>
+<br/> <br/> <br/> 
+
       <div data-aos="fade-up">      <Aboutus />
 </div>
 

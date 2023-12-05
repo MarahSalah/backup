@@ -1,0 +1,154 @@
+body {
+    background-color: rgb(255, 255, 255);
+  }
+  
+
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+   
+   
+    background-image: url('https://www.mastercard.us/content/dam/public/mastercardcom/na/us/en/consumers/find-a-card/images/woman-opening-gift-box-1300x650.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    color: rgb(36, 49, 92);
+    font-size: 80%;
+  }
+  
+  .hero-section h2 {
+    font-size: 80px;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    margin-left: 30%;
+    margin-top: 5%;
+  }
+  
+
+  @media screen and (max-width: 768px) {
+    .hero-section h2 {
+      font-size: 50px;
+    }
+    
+    .about-us {
+      height: 300px;
+    }
+  }
+
+
+.box-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+  }
+  
+  .box {
+  font-style: oblique;
+    padding: 20px;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-right: 10%;
+    color: rgb(36, 49, 92);
+    font-size: 30px;
+    text-align: center;
+    margin-top: 1%;
+  }
+  
+  .box1 {
+    border-radius: 10px;
+    padding: 20px;
+    background-color:whitesmoke;
+    width: 30%;
+    margin-left: 10px; 
+    color: rgb(36, 49, 92);
+    font-size: 20px;
+    text-align: center;
+    margin-top: 1%;
+   
+    
+  }
+  .image-section {
+    text-align: center; 
+    margin-top: 20px; 
+  }
+  
+  .image-box {
+    width: 80%;
+    margin: 0 auto; 
+    position: relative; 
+    margin-top: 2%;
+ 
+    
+  }
+  
+  .image-box img {
+    width: 100%;
+    height: 500px;
+  }
+  
+  .image-text {
+    position: absolute;
+
+    top: 70px;
+ margin-right:60% ;
+  
+ 
+    font-size: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(36, 49, 92);
+    padding: 10px;
+    text-align: center;
+  }
+  .image-text p {
+    font-size: 18px;
+    margin-top: 2%; 
+  }
+  
+  
+  
+  
+  
+  footer {
+    margin-top: 10px; 
+  }
+  @media (max-width: 768px) {
+    .image-text h3, .image-text p {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .box1 {
+      display: block;
+    }
+    .image-section {
+      display: block;
+    }
+    .box1 {
+      width: 100%;
+    }
+  }
+@media (min-width: 768px) {
+  .hero-section h2 {
+    font-size: 36px;
+  }
+  .new-section {
+    flex-direction: row;
+  }
+}
+.new-section .box-container {
+  display: flex;
+  flex-direction: column; 
+}
+
+.box {
+  font-style: oblique;
+    padding: 20px;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-right: 10%;
+    color: rgb(36, 49, 92);
+    font-size: 30px;
+    text-align: center;
+    margin-top: 1%;
+  }

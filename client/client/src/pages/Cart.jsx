@@ -14,7 +14,7 @@ export const Cart = () => {
   const fetchCartData = () => {
     axios.get('http://localhost:8080/Cart')
       .then(response => {
-        setCartItems(response.data); 
+        setCartItems(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -43,8 +43,10 @@ export const Cart = () => {
       });
   };
 
-  const handleRemove = (itemId) => {
-    axios.delete(`http://localhost:8080/Cart/${itemId}`)
+  const handleRemove = (itemId, isOrder = false) => {
+    const params = isOrder ? { order_id: itemId } : { product_id: itemId };
+
+    axios.put('http://localhost:8080/Cart', { params })
       .then(() => {
         fetchCartData();
       })
@@ -95,7 +97,9 @@ export const Cart = () => {
                           </div>
                         </div>
                         <div className="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
-                          <button onClick={() => handleRemove(item.id)} className="bg-red-500 p-2 rounded-md text-white">Remove</button>
+                          <button onClick={() => handleRemove(item.id, true)} className="bg-red-500 p-2 rounded-md text-white">
+                            Remove
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -107,7 +111,6 @@ export const Cart = () => {
         </div>
       </section>
 
-     
       <Checkout cartItems={cartItems} />
     </div>
   );

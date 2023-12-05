@@ -231,19 +231,46 @@ const Profile = () => {
           </div>
         )}
 
-        {activeTab === 'WishList' && (
+
+
+
+
+
+{activeTab === 'WishList' && (
           <div>
             <h2>Wishlist:</h2>
-            {wishlistData && wishlistData.map((item) => (
-              <div key={item.id}>
-                <p>{item.name}</p>
-              </div>
-            ))}
+            {wishlistData && wishlistData.length > 0 ? (
+  <table className="min-w-full bg-white border border-gray-300">
+    <thead>
+      <tr>
+        <th className="py-2 px-4 border-b">Product ID</th>
+        <th className="py-2 px-4 border-b">Product Name</th>
+        <th className="py-2 px-4 border-b">Description</th>
+        <th className="py-2 px-4 border-b">Price</th>
+        <th className="py-2 px-4 border-b">Product Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      {wishlistData.map((item) => (
+        <tr key={item.product_id} className="hover:bg-gray-100">
+          <td className="py-2 px-4 border-b">{item.product_id}</td>
+          <td className="py-2 px-4 border-b">{item.product_name}</td>
+          <td className="py-2 px-4 border-b">{item.description}</td>
+          <td className="py-2 px-4 border-b">{item.price}</td>
+          <td className="py-2 px-4 border-b">{item.product_rating}</td>
+          
+        </tr>
+      ))}
+    </tbody>
+  </table>
+) : (
+  <p className="text-gray-500">No items in the wishlist.</p>
+)}
           </div>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default Profile;

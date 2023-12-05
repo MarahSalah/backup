@@ -1,68 +1,118 @@
-import React from 'react';
-import { MdOutlineCancel } from 'react-icons/md';
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Checkout from './Checkout';
 
-import { useStateContext } from '../contexts/ContextProvider';
-import { cartData } from '../data/dummy';
-import { Button } from '.';
+export const Cart = () => {
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const Cart = () => {
-  const { currentColor } = useStateContext();
+  useEffect(() => {
+    fetchCartData();
+  }, []);
+
+  const fetchCartData = () => {
+    axios.get('http://localhost:8080/getCart')
+      .then(response => {
+        console.log(response.data)
+        setCartItems(response.data); 
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  };
+
+  const handleIncrement = (itemId) => {
+    axios.put(`http://localhost:8080/orderIncrement/${itemId}`, { action: 'increment' })
+      .then(() => {
+        fetchCartData();
+      })
+      .catch(error => {
+        console.error('Error updating data:', error);
+      });
+  };
+
+  const handleDecrement = (itemId) => {
+    axios.put(`http://localhost:8080/orderDecrement/${itemId}`, { action: 'decrement' })
+      .then(() => {
+        fetchCartData();
+      })
+      .catch(error => {
+        console.error('Error updating data:', error);
+      });
+  };
+
+  const handleRemove = (itemId, isOrder = false) => {
+    const params = isOrder ? { order_id: itemId } : { product_id: itemId };
+    axios.put(`http://localhost:8080/removeFromOrders`, params)
+      .then(() => {
+        fetchCartData();
+      })
+      .catch(error => {
+        console.error('Error removing item:', error);
+      });
+  };
 
   return (
-    <div className="bg-half-transparent w-full fixed nav-item top-0 right-0 ">
-      <div className="float-right h-screen  duration-1000 ease-in-out dark:text-gray-200 transition-all dark:bg-[#484B52] bg-white md:w-400 p-8">
-        <div className="flex justify-between items-center">
-          <p className="font-semibold text-lg">Shopping Cart</p>
-          <Button
-            icon={<MdOutlineCancel />}
-            color="rgb(153, 171, 180)"
-            bgHoverColor="light-gray"
-            size="2xl"
-            borderRadius="50%"
-          />
-        </div>
-        {cartData?.map((item, index) => (
-          <div key={index}>
-            <div>
-              <div className="flex items-center   leading-8 gap-5 border-b-1 border-color dark:border-gray-600 p-4">
-                <img className="rounded-lg h-80 w-24" src={item.image} alt="" />
-                <div>
-                  <p className="font-semibold ">{item.name}</p>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm font-semibold">{item.category}</p>
-                  <div className="flex gap-4 mt-2 items-center">
-                    <p className="font-semibold text-lg">{item.price}</p>
-                    <div className="flex items-center border-1 border-r-0 border-color rounded">
-                      <p className="p-2 border-r-1 dark:border-gray-600 border-color text-red-600 "><AiOutlineMinus /></p>
-                      <p className="p-2 border-r-1 border-color dark:border-gray-600 text-green-600">0</p>
-                      <p className="p-2 border-r-1 border-color dark:border-gray-600 text-green-600"><AiOutlinePlus /></p>
+    <div>
+      <section className="h-screen bg-gray-100 py-12 sm:py-16 lg:py-20">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center">
+            <h1 className="text-2xl font-semibold text-gray-900">Your Cart</h1>
+          </div>
+          <div className="mx-auto mt-8 max-w-2xl md:mt-12">
+            <div className="bg-white shadow">
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                <div className="px-4 py-6 sm:px-8 sm:py-10">
+                  {cartItems.map(item => (
+                    <div key={item.product_order_id} className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
+                      <div className="shrink-0">
+                        <img
+                          className="h-24 w-24 max-w-full rounded-lg object-cover"
+                          src={item.product.img_url}
+                          alt={item.product.product_name}
+                        />
+                      </div>
+                      <div className="relative flex flex-1 flex-col justify-between">
+                        <div className="sm:col-gap-5 sm:grid sm:grid-cols-2">
+                          <div className="pr-8 sm:pr-5">
+                            <p className="text-base font-semibold text-gray-900">
+                              {item.product.product_name}
+                            </p>
+                            <p className="mx-0 mt-1 mb-0 text-sm text-gray-400">
+                              Count: {item.order_count}
+                            </p>
+                          </div>
+                          <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
+                            <button onClick={() => handleDecrement(item.order_id)} className="bg-gray-200 p-2 rounded-md">-</button>
+                            <p className="mx-2 text-base font-semibold text-gray-900">{item.order_count}</p>
+                            <button onClick={() => handleIncrement(item.order_id)} className="bg-gray-200 p-2 rounded-md">+</button>
+                            <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
+                              Total: ${item.order_price * item.order_count}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
+                          <button onClick={() => handleRemove(item.order_id, true)} className="bg-red-500 p-2 rounded-md text-white">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              </div>
+              )}
             </div>
           </div>
-        ))}
-        <div className="mt-3 mb-3">
-          <div className="flex justify-between items-center">
-            <p className="text-gray-500 dark:text-gray-200">Sub Total</p>
-            <p className="font-semibold">$890</p>
-          </div>
-          <div className="flex justify-between items-center mt-3">
-            <p className="text-gray-500 dark:text-gray-200">Total</p>
-            <p className="font-semibold">$890</p>
-          </div>
         </div>
-        <div className="mt-5">
-          <Button
-            color="white"
-            bgColor={currentColor}
-            text="Place Order"
-            borderRadius="10px"
-            width="full"
-          />
-        </div>
-      </div>
+      </section>
+
+     
+      <Checkout cartItems={cartItems} />
     </div>
   );
 };

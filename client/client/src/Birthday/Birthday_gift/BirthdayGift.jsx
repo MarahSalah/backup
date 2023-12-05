@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -69,12 +68,12 @@ const BirthdayGift = () => {
               <Link to={`/product/${item.product_id}`}>
                 <img
                   style={{ width: '100%', height: 'auto', borderRadius: '1rem', cursor: 'pointer' }}
-                  src={item.img_url} alt={item.description}
+                  src={item.img_url} alt={item.product_name}
                 />
               </Link>
               <div style={{ padding: '1rem', backgroundColor: '#fffff', borderRadius: '1rem', marginTop: '1rem' }}>
                 <Link to={`/product/${item.id}`} style={{ textDecoration: 'none' }}>
-                  <p style={{ fontSize: '1.2rem', color: '#27283d', marginBottom: '0.5rem' }}>{item.description}</p>
+                  <p style={{ fontSize: '1.2rem', color: '#27283d', marginBottom: '0.5rem' }}>{item.product_name}</p>
                 </Link>
                 <p style={{ fontSize: '1rem', color: '#27283d' }}>{item.price}</p>
               </div>
